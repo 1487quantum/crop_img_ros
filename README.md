@@ -1,5 +1,5 @@
-# masker_ros
+# masker_util
 
-<a href="LICENSE" ><img src="https://img.shields.io/github/license/1487quantum/masker_ros?style=for-the-badge"/></a>
+<a href="LICENSE" ><img src="https://img.shields.io/github/license/1487quantum/masker_util?style=for-the-badge"/></a>
 
-Image masking &amp; cropping utility for fisheye / wide-angle / omnidirectional image.
+A ROS package for Image masking &amp; cropping utility for fisheye / wide-angle / omnidirectional image.
