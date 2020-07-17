@@ -9,9 +9,10 @@ add_compile_options(-std=c++11)
 ## is used, also find other catkin packages
 find_package(OpenCV 3.4 REQUIRED)
 find_package(catkin REQUIRED COMPONENTS
-cv_bridge
+  cv_bridge
   image_transport
   roscpp
+  dynamic_reconfigure
 )
 
 ## System dependencies are found with CMake's conventions
@@ -89,10 +90,9 @@ cv_bridge
 ##     and list every .cfg file to be processed
 
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
-# generate_dynamic_reconfigure_options(
-#   cfg/DynReconf1.cfg
-#   cfg/DynReconf2.cfg
-# )
+ generate_dynamic_reconfigure_options(
+   cfg/masker.cfg
+ )
 
 ###################################
 ## catkin specific configuration ##
@@ -105,8 +105,8 @@ cv_bridge
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-#  LIBRARIES masker_util
   CATKIN_DEPENDS cv_bridge image_transport roscpp
+#  LIBRARIES masker_util
 #  DEPENDS system_lib
 )
 
@@ -134,7 +134,7 @@ include_directories(
 ## Declare a C++ executable
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
-add_executable(masker_util src/masker_util.cpp)
+add_executable(masker_util_node src/masker_util_node.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -144,11 +144,12 @@ add_executable(masker_util src/masker_util.cpp)
 
 ## Add cmake target dependencies of the executable
 ## same as for the library above
- add_dependencies(masker_util ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+ add_dependencies(masker_util_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS} ${PROJECT_NAME}_gencfg)
 
 ## Specify libraries to link a library or executable target against
- target_link_libraries(masker_util
+target_link_libraries(masker_util_node
    ${catkin_LIBRARIES}
+   ${OpenCV_LIBS}
  )
 
 #############
