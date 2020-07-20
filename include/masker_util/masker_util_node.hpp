@@ -29,20 +29,18 @@
 class masker_util_node {
 public:
     masker_util_node(const ros::NodeHandle& nh_);
-    bool init();	//Init
+    bool init(); //Init
     // === CALLBACK & PUBLISHER ===
     void dr_callback(const masker_util::maskerConfig& config, const uint32_t& level);
-    void imgCallback(const sensor_msgs::ImageConstPtr& imgp, const sensor_msgs::CameraInfoConstPtr &cam_info); //Image Input callback
+    void imgCallback(const sensor_msgs::ImageConstPtr& imgp, const sensor_msgs::CameraInfoConstPtr& cam_info); //Image Input callback
 
 private:
-
+    std::string topic_out; //Output topic name
     ros::NodeHandle nh; //Node handle
     // Pub/Sub
-   // image_transport::Publisher imgPub;
-    //image_transport::Subscriber imgSub;
     image_transport::Publisher imgPub;
-ros::Publisher pub_info_camera;
-image_transport::CameraSubscriber imgSub;
+    ros::Publisher pub_info_camera;
+    image_transport::CameraSubscriber imgSub;
     //Dynamic reconfig
     dynamic_reconfigure::Server<masker_util::maskerConfig> msk_server;
     dynamic_reconfigure::Server<masker_util::maskerConfig>::CallbackType msk_cb;
@@ -50,7 +48,7 @@ image_transport::CameraSubscriber imgSub;
     //Params
     bool setMask{ true };
     int cirRad{ 720 };
-    cv::Point cOffset; 		//Circle offset from img center: x < 0 is left, y < 0 is up]
-    cv::Point borderOffset; 	//Border offset from circle
+    cv::Point cOffset; //Circle offset from img center: x < 0 is left, y < 0 is up]
+    cv::Point borderOffset; //Border offset from circle
 };
 

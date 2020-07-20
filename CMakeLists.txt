@@ -13,7 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   roscpp
   dynamic_reconfigure
-camera_info_manager
+  camera_info_manager
 )
 
 ## System dependencies are found with CMake's conventions

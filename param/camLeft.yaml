@@ -1,0 +1,52 @@
+!!python/object/new:dynamic_reconfigure.encoding.Config
+dictitems:
+  BORDER_X: 50
+  BORDER_Y: 0
+  CENTER_X: -50
+  CENTER_Y: 0
+  RADIUS: 735
+  SET_MASK: true
+  groups: !!python/object/new:dynamic_reconfigure.encoding.Config
+    dictitems:
+      SET_MASK: true
+      groups: !!python/object/new:dynamic_reconfigure.encoding.Config
+        dictitems:
+          Circle_Mask: !!python/object/new:dynamic_reconfigure.encoding.Config
+            dictitems:
+              CENTER_X: -50
+              CENTER_Y: 0
+              RADIUS: 735
+              groups: !!python/object/new:dynamic_reconfigure.encoding.Config
+                state: []
+              id: 1
+              name: Circle_Mask
+              parameters: !!python/object/new:dynamic_reconfigure.encoding.Config
+                state: []
+              parent: 0
+              state: true
+              type: ''
+            state: []
+          Crop_Border: !!python/object/new:dynamic_reconfigure.encoding.Config
+            dictitems:
+              BORDER_X: 50
+              BORDER_Y: 0
+              groups: !!python/object/new:dynamic_reconfigure.encoding.Config
+                state: []
+              id: 2
+              name: Crop_Border
+              parameters: !!python/object/new:dynamic_reconfigure.encoding.Config
+                state: []
+              parent: 0
+              state: true
+              type: ''
+            state: []
+        state: []
+      id: 0
+      name: Default
+      parameters: !!python/object/new:dynamic_reconfigure.encoding.Config
+        state: []
+      parent: 0
+      state: true
+      type: ''
+    state: []
+state: []
