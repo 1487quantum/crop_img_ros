@@ -13,12 +13,8 @@ find_package(catkin REQUIRED COMPONENTS
   image_transport
   roscpp
   dynamic_reconfigure
+camera_info_manager
 )
-
-## Build as Release
-IF(NOT CMAKE_BUILD_TYPE)
-    SET(CMAKE_BUILD_TYPE RELEASE)
-ENDIF(NOT CMAKE_BUILD_TYPE)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -110,7 +106,7 @@ ENDIF(NOT CMAKE_BUILD_TYPE)
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
   INCLUDE_DIRS include
-  CATKIN_DEPENDS cv_bridge image_transport roscpp
+  CATKIN_DEPENDS cv_bridge image_transport roscpp camera_info_manager
 #  LIBRARIES masker_util
 #  DEPENDS system_lib
 )

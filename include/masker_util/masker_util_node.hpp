@@ -3,6 +3,7 @@
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
 #include <dynamic_reconfigure/server.h>
+#include <camera_info_manager/camera_info_manager.h>
 
 #include "opencv2/core.hpp"
 #include "masker_util/maskerConfig.h"
@@ -31,13 +32,17 @@ public:
     bool init();	//Init
     // === CALLBACK & PUBLISHER ===
     void dr_callback(const masker_util::maskerConfig& config, const uint32_t& level);
-    void imgCallback(const sensor_msgs::ImageConstPtr& imgp); //Image Input callback
+    void imgCallback(const sensor_msgs::ImageConstPtr& imgp, const sensor_msgs::CameraInfoConstPtr &cam_info); //Image Input callback
 
 private:
+
     ros::NodeHandle nh; //Node handle
     // Pub/Sub
+   // image_transport::Publisher imgPub;
+    //image_transport::Subscriber imgSub;
     image_transport::Publisher imgPub;
-    image_transport::Subscriber imgSub;
+ros::Publisher pub_info_camera;
+image_transport::CameraSubscriber imgSub;
     //Dynamic reconfig
     dynamic_reconfigure::Server<masker_util::maskerConfig> msk_server;
     dynamic_reconfigure::Server<masker_util::maskerConfig>::CallbackType msk_cb;

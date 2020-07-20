@@ -25,10 +25,19 @@ masker_util_node::masker_util_node(const ros::NodeHandle& nh_)
 
 bool masker_util_node::init()
 {
+ros::NodeHandle nh_mono(this->nh, "img_out");
+
+camera_info_manager::CameraInfoManager *left_cinfo_;
+left_cinfo_ =
+    new camera_info_manager::CameraInfoManager(nh_mono);
+
     // Pub-Sub
     image_transport::ImageTransport it(this->nh);
-    imgSub = it.subscribe("img_in", 1, &masker_util_node::imgCallback, this); //Sub
-    imgPub = it.advertise("img_out", 1);
+    imgSub = it.subscribeCamera("img_in", 1, &masker_util_node::imgCallback, this);
+ imgPub = it.advertise("img_out/image_raw", 1);
+pub_info_camera = this->nh.advertise<sensor_msgs::CameraInfo>("img_out/camera_info", 1); 
+   // imgSub = it.subscribe("img_in/image_raw", 1, &masker_util_node::imgCallback, this); //Sub
+   // imgPub = it.advertise("img_out/image_raw", 1);
 
     //start reconfig
     msk_cb = boost::bind(&masker_util_node::dr_callback, this, _1, _2);
@@ -46,10 +55,10 @@ void masker_util_node::dr_callback(const masker_util::maskerConfig& config, cons
     borderOffset = cv::Point(config.BORDER_X, config.BORDER_Y);
 }
 
-void masker_util_node::imgCallback(const sensor_msgs::ImageConstPtr& imgp)
+void masker_util_node::imgCallback(const sensor_msgs::ImageConstPtr& imgp, const sensor_msgs::CameraInfoConstPtr &cam_info)
 {
     try {
-        cv_bridge::CvImagePtr imagePtrRaw{ cv_bridge::toCvCopy(imgp, sensor_msgs::image_encodings::BGR16) };
+        cv_bridge::CvImagePtr imagePtrRaw{ cv_bridge::toCvCopy(imgp, sensor_msgs::image_encodings::BGR8) };
         cv::Mat frame{ imagePtrRaw->image };
         cv::Size f_size(frame.cols, frame.rows);
 
@@ -77,11 +86,21 @@ void masker_util_node::imgCallback(const sensor_msgs::ImageConstPtr& imgp)
             frame = pRoi(cropFrame); //Crop image
             pRoi.release();
         }
-        imgPub.publish(cv_bridge::CvImage(std_msgs::Header(), "bgr16", frame).toImageMsg());
+
+//Publish result
+        imgPub.publish(cv_bridge::CvImage(std_msgs::Header(), "bgr8", frame).toImageMsg());
+ROS_WARN_STREAM(cam_info->width);
+
+sensor_msgs::CameraInfo info_camera;
+    info_camera.header.stamp = ros::Time::now(); 
+info_camera.width = 2*(cirRad+borderOffset.x);
+info_camera.height = frame.rows+2*borderOffset.y;
+    pub_info_camera.publish(info_camera); 
+
         frame.release();
     }
     catch (cv_bridge::Exception& e) {
-        ROS_ERROR("Could not convert from '%s' to 'bgr16'.", imgp->encoding.c_str());
+        ROS_ERROR("Could not convert from '%s' to 'bgr8'.", imgp->encoding.c_str());
     }
 }
 
