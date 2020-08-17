@@ -4,6 +4,8 @@
 
 A ROS package for Image masking &amp; cropping utility for fisheye / wide-angle / omnidirectional image.
 
+![](assets/mask_rqt.png)
+
 ## Installation
 
 Git clone the repository into your workspace (e.g. catkin_ws).
@@ -30,18 +32,18 @@ $ roslaunch masker_util masker_util_stereo.launch
 
 ## Modes
 There are 2 modes for the masker utils:
-* Normal Mode: Apply the mask on the output image.
-* Debug Mode (Default): Used to position and set the mask in place, with the markings overlay to guide the placement of the mask.
+* **Normal Mode**: Apply the mask on the output image.
+* **Debug Mode (Default)**: Used to position and set the mask in place, with the markings overlay to guide the placement of the mask.
 
 | Normal Mode | Debug Mode |
 | ----------- | ---------- |
 | ![](assets/mask_normal.png) | ![](assets/mask_debug.png) |
 
 **Legend**
-- Green cross marker: Represents the center of the image.
-- Blue plus marker: Represnts the center of the circle mask.
-- Blue circle: Represents the mask. Area outside the circle would be filtered out as black.
-- Rectanglular border: Represents the new image size, which would be cropped to *center* the image output.
+- *Green cross marker*: Represents the center of the image.
+- *Blue plus marker*: Represnts the center of the circle mask.
+- *Blue circle*: Represents the mask. Area outside the circle would be filtered out as black.
+- *Rectanglular border*: Represents the new image size, which would be cropped to *center* the image output.
 
 ## Parameters
 The mask could be adjusted via *rqt_reconfigure*.
