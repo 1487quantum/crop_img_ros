@@ -45,11 +45,25 @@ There are 2 modes for the masker utils:
 - *Blue circle*: Represents the mask. Area outside the circle would be filtered out as black.
 - *Rectanglular border*: Represents the new image size, which would be cropped to *center* the image output.
 
+## Topics
+### Subscriber
+| Topic Name | Type | Description |
+| :--------: | :--: | :---------: |
+| `/img_in` | image_transport::CameraSubscriber | Subscribes to both `/img_in/image_raw` and `/img_in/camera_info` of `/img_in`. Specify only the camera namespace. |
+
+### Publisher
+| Topic Name | Type | Description |
+| :--------: | :--: | :---------: |
+| `/img_out/image_raw` | sensor_msgs::Image | Publishes raw image output. |
+| `/img_out/camera_info` | sensor_msgs::CameraInfo | Publishes output image camera info. |
+
+> **Note:** `/img_out` is the default value of the `output_img_topic` parameter, this could be changed via the launch file.
+
 ## Parameters
 The mask could be adjusted via *rqt_reconfigure*.
 | Parameters | Description | Type | Range |
-| ---------- | ----------- | ---- | ----- |
-| SET_MASK   | To toggle *Debug Mode* | Boolean | 0 <-> 1 |
+| :--------: | :---------: | :--: | :---: |
+| SET_MASK   | To toggle *Debug Mode* | Bool(ean) | 0 <-> 1 |
 | CENTER_X   | The center x coordinate of the circle mask | Int(eger) | -500 <-> 500 |
 | CENTER_Y   | The center y coordinate of the circle mask | Int(eger) | -500 <-> 500 |
 | RADIUS     | The radius of the circle mask | Int(eger) | 500 <-> 900 |
@@ -58,3 +72,7 @@ The mask could be adjusted via *rqt_reconfigure*.
 
 > **Note:** The *param* directory is used to store the parameters of the masks (in *.yaml* format).
 
+## Services
+- /img_out/image_raw/compressed/set_paramters
+- /img_out/image_raw/compressedDepth/set_paramters
+- /img_out/set_camera_info
